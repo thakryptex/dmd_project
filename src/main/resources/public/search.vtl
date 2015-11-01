@@ -1,0 +1,93 @@
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index">PubLib.zero</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index">Home</a></li>
+                <li class="active"><a href="search">Search</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publication types <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                #if( $login )
+                    <li><a href="#">$login</a></li>
+                    <li><a href="logout">Log out</a></li>
+                #else
+                    <li><a href="login">Sign in</a></li>
+                    <li><a href="register">Register</a></li>
+                #end
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container">
+
+        <form class="form-signin" action="#" method="post">
+            <h2 class="form-signin-heading">Fill attributes to find publication you need.</h2>
+
+            <label for="title" class="sr-only">Title</label>
+            <input id="title" name="title" type="text" class="form-control" placeholder="Title">
+
+            <label for="author" class="sr-only">Author</label>
+            <input id="author" name="author" type="text" class="form-control" placeholder="Author">
+
+            <label for="year" class="sr-only">Year</label>
+            <input id="year" name="year" type="number" class="form-control" placeholder="Year">
+
+            <label for="id" class="sr-only">Publication ID</label>
+            <input id="id" name="id" type="number" class="form-control" placeholder="ID">
+
+            <label for="type" class="sr-only">Publication type</label>
+            <input id="type" name="type" type="number" class="form-control" placeholder="Type">
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        </form>
+
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <div class="container" name="results">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Author</td>
+                        <td>Title</td>
+                        <td>ID</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jock</td>
+                        <td>Technologies</td>
+                        <td>4234</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>

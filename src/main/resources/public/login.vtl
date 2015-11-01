@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index">PubLib.zero</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                #if( $login )
+                    <li><a href="#">$login</a></li>
+                    <li><a href="logout">Log out</a></li>
+                #else
+                    <li class="active"><a href="login">Sign in</a></li>
+                    <li><a href="register">Register</a></li>
+                #end
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container">
+
+        #if( $error )
+            <h1 id="error-log">$error</h1>
+        #end
+
+      <form class="form-signin" action="/authorize" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+
+        <label for="login" class="sr-only">Login</label>
+        <input id="login" name="login" type="text" class="form-control" placeholder="Login" required autofocus>
+
+        <label for="password" class="sr-only">Password</label>
+        <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div>
+
