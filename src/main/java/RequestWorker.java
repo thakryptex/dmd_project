@@ -1,20 +1,13 @@
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.helper.DefaultHelperRegistry;
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
-import com.github.jknack.handlebars.io.TemplateLoader;
-import com.github.jknack.handlebars.js.HandlebarsJs;
 import database.DBWorker;
 import database.UsersTable;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class RequestWorker {
@@ -29,6 +22,7 @@ public class RequestWorker {
     public ModelAndView index(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
         model.put("template", "public/index.vtl");
+        model.put("styles", "public/styles/index.vtl");
         model.put("login", req.session().attribute("login"));
         return new ModelAndView(model, layout);
     }
@@ -36,15 +30,17 @@ public class RequestWorker {
     public ModelAndView login(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
 
-        req.session(true).maxInactiveInterval(60*60);
+        req.session(true).maxInactiveInterval(60 * 60);
         if (!req.session().attributes().isEmpty())
             model.put("error", req.session().attribute("error"));
 
         model.put("template", "public/login.vtl");
+        model.put("styles", "public/styles/login.vtl");
         return new ModelAndView(model, layout);
     }
 
     public String authorize(Request req, Response res) {
+        req.session().removeAttribute("error");
 
         String[] args = req.body().split("&");
         String login = args[0].split("=")[1];
@@ -53,6 +49,7 @@ public class RequestWorker {
         try {
             UsersTable.findUser(login, password, dbWorker.statement());
         } catch (NoSuchElementException e) {
+            System.out.println(req.body());
             req.session().attribute("error", "Wrong login or password. Try again...");
             res.redirect("/login");
         } catch (Exception e) {
@@ -74,6 +71,7 @@ public class RequestWorker {
             model.put("error", req.session().attribute("error"));
 
         model.put("template", "public/register.vtl");
+        model.put("styles", "public/styles/register.vtl");
         return new ModelAndView(model, layout);
     }
 
@@ -86,7 +84,7 @@ public class RequestWorker {
             UsersTable.addUser(login, password, dbWorker.statement());
         } catch (SQLException e) {
             req.session().attribute("error", "User with this login already exist.");
-            res.redirect("/login");
+            res.redirect("/register");
         }
 
         req.session().attribute("login", login);
@@ -105,15 +103,53 @@ public class RequestWorker {
     public ModelAndView search(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
 
-        if (req.session().attributes().isEmpty()) {
+        if (req.session().attribute("error") != null || req.session().attributes().isEmpty()) {
             req.session().attribute("error", "Firstly, you have to log in before use PubLib.");
             res.redirect("/login");
+        } else {
+            model.put("pubs", req.session().attribute("pubs"));
         }
 
         model.put("template", "public/search.vtl");
+        model.put("styles", "public/styles/search.vtl");
         model.put("login", req.session().attribute("login"));
         return new ModelAndView(model, layout);
     }
 
+
+    public String searching(Request req, Response res) {
+        HashMap<String, Object> model = new HashMap<>();
+
+        System.out.println(req.body());
+
+        List<String> list = Arrays.asList(req.body().split("&"));
+
+        list.forEach(p -> {
+            String s = p.replace("+", " ");
+            String[] attr = s.split("\\=");
+            if (attr.length > 1)
+                model.put(attr[0], attr[1]);
+        });
+
+        List<HashMap> results = null;
+        try {
+            results = dbWorker.search(model);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        req.session().attribute("pubs", results);
+        res.redirect("/search");
+
+        return "";
+    }
+
+    public ModelAndView moreinfo(Request req, Response res) {
+        HashMap<String, Object> model = new HashMap<>();
+        model.put("pubid", req.params("pubid"));
+        model.put("template", "public/publication.vtl");
+        model.put("styles", "public/styles/publication.vtl");
+        return new ModelAndView(model, layout);
+    }
 
 }

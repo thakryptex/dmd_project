@@ -11,25 +11,28 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="index">Home</a></li>
-                <li class="active"><a href="search">Search</a></li>
+                <li><a href="/index">Home</a></li>
+                <li class="active"><a href="/search">Search</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publication types <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">Articles</a></li>
+                        <li><a href="#">Books</a></li>
+                        <li><a href="#">Incollections</a></li>
+                        <li><a href="#">Proceedings</a></li>
+                        <li><a href="#">Inproceedings</a></li>
+                        <li><a href="#">Phd Theses</a></li>
+                        <li><a href="#">Master Theses</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 #if( $login )
                     <li><a href="#">$login</a></li>
-                    <li><a href="logout">Log out</a></li>
+                    <li><a href="/logout">Log out</a></li>
                 #else
-                    <li><a href="login">Sign in</a></li>
-                    <li><a href="register">Register</a></li>
+                    <li><a href="/login">Sign in</a></li>
+                    <li><a href="/register">Register</a></li>
                 #end
 
             </ul>
@@ -40,23 +43,23 @@
 
     <div class="container">
 
-        <form class="form-signin" action="#" method="post">
+        <form class="form-signin" action="searching" method="post">
             <h2 class="form-signin-heading">Fill attributes to find publication you need.</h2>
 
             <label for="title" class="sr-only">Title</label>
             <input id="title" name="title" type="text" class="form-control" placeholder="Title">
 
-            <label for="author" class="sr-only">Author</label>
-            <input id="author" name="author" type="text" class="form-control" placeholder="Author">
+            <label for="name" class="sr-only">Author</label>
+            <input id="name" name="name" type="text" class="form-control" placeholder="Author">
 
             <label for="year" class="sr-only">Year</label>
             <input id="year" name="year" type="number" class="form-control" placeholder="Year">
 
-            <label for="id" class="sr-only">Publication ID</label>
-            <input id="id" name="id" type="number" class="form-control" placeholder="ID">
+            <label for="pubid" class="sr-only">Publication ID</label>
+            <input id="pubid" name="pubid" type="number" class="form-control" placeholder="ID">
 
             <label for="type" class="sr-only">Publication type</label>
-            <input id="type" name="type" type="number" class="form-control" placeholder="Type">
+            <input id="type" name="type" type="text" class="form-control" placeholder="Type">
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
         </form>
@@ -65,22 +68,95 @@
         <p></p>
         <p></p>
 
-        <div class="container" name="results">
+        <div class="table-responsive" name="results">
 
-            <table class="table table-bordered">
+            <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <td>Author</td>
-                        <td>Title</td>
-                        <td>ID</td>
-                    </tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>Type</th>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Jock</td>
-                        <td>Technologies</td>
-                        <td>4234</td>
+                        <td>1</td>
+                        <td>Seven Steps to Rendezvous with the Casual User.</td>
+                        <td>E. F. Codd</td>
+                        <td>1974</td>
+                        <td>Article</td>
                     </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Interactive Support for Non-Programmers: The Relational and Network Approaches.</td>
+                        <td>E. F. Codd</td>
+                        <td>1974</td>
+                        <td>Article</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>The Capabilities of Relational Database Management Systems.</td>
+                        <td>E. F. Codd</td>
+                        <td>1981</td>
+                        <td>Article</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Relational Completeness of Data Base Sublanguages.</td>
+                        <td>E. F. Codd</td>
+                        <td>1972</td>
+                        <td>Article</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Further Normalization of the Data Base Relational Model.</td>
+                        <td>E. F. Codd</td>
+                        <td>1971</td>
+                        <td>Article</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Data Base Sublanguage Founded on the Relational Calculus.</td>
+                        <td>E. F. Codd</td>
+                        <td>1971</td>
+                        <td>Article</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Derivability, Redundancy and Consistency of Relations Stored in Large Data Banks.</td>
+                        <td>E. F. Codd</td>
+                        <td>1969</td>
+                        <td>Article</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Normalized Data Base Structure: A Brief Tutorial.</td>
+                        <td>E. F. Codd</td>
+                        <td>1971</td>
+                        <td>Article</td>
+                    </tr>
+                        <tr>
+                            <td>38048</td>
+                            <td>Fatal Flaws in SQL - Part Two.</td>
+                            <td>E. F. Codd</td>
+                            <td>1989</td>
+                            <td>Article</td>
+                            <td><a href="publication/38048" class="btn btn-info" role="button">Info</a></td>
+                        </tr>
+
+                    #if( $pubs)
+                        #foreach( $pub in $pubs )
+                            <a href="publication/$pubid">
+                                <tr>
+                                    <td>$pub.pubid</td>
+                                    <td>$pub.title</td>
+                                    <td>$pub.name</td>
+                                    <td>$pub.year</td>
+                                    <td>$pub.type</td>
+                                </tr>
+                            </a>
+                        #end
+                    #end
                 </tbody>
             </table>
 

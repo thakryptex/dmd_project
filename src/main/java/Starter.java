@@ -26,16 +26,19 @@ public class Starter {
             return "Redirect to Main Page";
         });
 
-        get("/index" , request::index , new VelocityTemplateEngine());
-        get("/search", request::search, new VelocityTemplateEngine());
+        get("/index"     , request::index , new VelocityTemplateEngine());
+        get("/search"    , request::search, new VelocityTemplateEngine());
+        post("/searching", request::searching);
 
-        get("/login", request::login   , new VelocityTemplateEngine());
-        get("/register", request::register, new VelocityTemplateEngine());
+        get("/login"     , request::login   , new VelocityTemplateEngine());
+        get("/logout"    , request::logout);
+        post("/authorize", request::authorize);
 
-        post("/authorize"   , request::authorize);
+        get("/register"     , request::register, new VelocityTemplateEngine());
         post("/registration", request::registration);
 
-        get("/logout", request::logout);
+        get("/publication/:pubid", request::moreinfo, new VelocityTemplateEngine());
+
     }
 
 }

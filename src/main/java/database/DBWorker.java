@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.*;
+import java.util.*;
 
 public class DBWorker {
 
@@ -32,11 +33,45 @@ public class DBWorker {
         return res;
     }
 
-    public void createTables() throws SQLException, ClassNotFoundException {
+    public List search(HashMap<String, Object> map) throws SQLException {
         StringBuilder query = new StringBuilder();
-        query.append("create sequenc");
-        statement.executeUpdate(query.toString());
-        System.out.println("All tables created!");
+        query.append("select ");
+        Set<String> columns = map.keySet();
+        columns.forEach(c -> {
+            query.append(c + ", ");
+        });
+        query.delete(query.length() - 2, query.length() - 1);
+
+        query.append("from publication natural join person where ");
+
+        map.entrySet().forEach(set -> {
+            String key = set.getKey();
+            String value = set.getValue().toString();
+            query.append(key);
+            if (key.equals("pubid") || key.equals("year")) {
+                query.append("=");
+                query.append(value);
+            } else {
+                query.append(" like ");
+                query.append("'%" + value + "%'");
+            }
+            query.append(" and ");
+        });
+        query.delete(query.length() - 5, query.length());
+        query.append(";");
+
+        ResultSet resultSet = statement.executeQuery(query.toString());
+        ResultSetMetaData meta = resultSet.getMetaData();
+        int size = meta.getColumnCount();
+        List<HashMap> list = new ArrayList<>(size);
+
+        for (int i = 0; i < size; i++) {
+            HashMap pub = new HashMap();
+            pub.put(meta.getColumnName(i), resultSet.getString(i));
+            list.add(pub);
+        }
+
+        return list;
     }
 
     public Statement statement() {

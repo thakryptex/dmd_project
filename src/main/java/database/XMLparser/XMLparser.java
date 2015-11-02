@@ -27,7 +27,7 @@ public class XMLparser {
 
         PubLibTables.deleteTables(dbWorker.statement());
 
-        dbWorker.createTables();
+        PubLibTables.createTables(dbWorker.statement());
 
         FileInputStream fis = new FileInputStream("dblp_part.xml");
         XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -73,7 +73,7 @@ public class XMLparser {
 
     private static void switcher(String endElement) throws SQLException {
         if (endElement.equals("article") || endElement.equals("inproceedings") || endElement.equals("book") || endElement.equals("incollection") || endElement.equals("proceedings") || endElement.equals("phdthesis") || endElement.equals("masterthesis")) {
-            currPub.pubType = endElement;
+            currPub.type = endElement;
             countPubs++;
 //            if (countPubs > 82000)
                 insertPubIntoDB(currPub);
@@ -83,10 +83,10 @@ public class XMLparser {
 
         switch (endElement) {
             case "author":
-                if (currPub.authors == null) {
-                    currPub.authors = new ArrayList<>();
+                if (currPub.person == null) {
+                    currPub.person = new ArrayList<>();
                 }
-                currPub.authors.add(tagContent);
+                currPub.person.add(tagContent);
                 tagContent = null;
                 break;
             case "editor":
@@ -180,7 +180,7 @@ public class XMLparser {
         } else query.append(", null");
         query.append(");\n");
 
-        switch (pub.pubType) {
+        switch (pub.type) {
             case "article":
                 query.append("insert into journal values ('" + pub.journal + "');\n");
                 query.append("insert into article values (" + countPubs + ", ");
@@ -254,10 +254,10 @@ public class XMLparser {
                 } else query.append("null);\n");
                 break;
         }
-        if (pub.authors != null) {
-            for (int i = 0; i < pub.authors.size(); i++) {
-                query.append("insert into person values ('" + pub.authors.get(i) + "', null);\n");
-                query.append("insert into written values (" + countPubs + ", '" + pub.authors.get(i) + "');\n");
+        if (pub.person != null) {
+            for (int i = 0; i < pub.person.size(); i++) {
+                query.append("insert into person values ('" + pub.person.get(i) + "', null);\n");
+                query.append("insert into written values (" + countPubs + ", '" + pub.person.get(i) + "');\n");
             }
         }
 

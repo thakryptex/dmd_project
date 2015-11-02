@@ -1,0 +1,30 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.container .text-muted {
+  margin-top: 20px;
+}
+
+.row {
+    border: 1px solid #dddddd;
+}
+
+.row h1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.row p {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.buttonsdiv {
+    position: static;
+}

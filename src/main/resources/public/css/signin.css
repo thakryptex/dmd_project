@@ -1,5 +1,4 @@
 body {
-  padding-top: 40px;
   padding-bottom: 40px;
   background-color: #eee;
 }
@@ -46,4 +45,10 @@ a {
 a:hover {
   color: #fff;
   text-decoration: none;
+}
+
+#error-log {
+  position: relative;
+  color: #ff6352;
+  text-align: center;
 }

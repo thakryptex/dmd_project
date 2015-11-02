@@ -1,0 +1,79 @@
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index">PubLib.zero</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/index">Home</a></li>
+                <li class="active"><a href="/search">Search</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publication types <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Articles</a></li>
+                        <li><a href="#">Books</a></li>
+                        <li><a href="#">Incollections</a></li>
+                        <li><a href="#">Proceedings</a></li>
+                        <li><a href="#">Inproceedings</a></li>
+                        <li><a href="#">Phd Theses</a></li>
+                        <li><a href="#">Master Theses</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                #if( $login )
+                    <li><a href="#">$login</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                #else
+                    <li><a href="/login">Sign in</a></li>
+                    <li><a href="/register">Register</a></li>
+                #end
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <h1 style="text-align: center;">Publication Page</h1>
+</div>
+
+<div class="container">
+    <div class="row" style="border: 0px">
+        <div class="buttonsdiv">
+        <button type="submit"  class="btn btn-lg btn-success" style="float:left">
+            <span class="glyphicon glyphicon-pencil"></span>  Modify</button>
+        <button type="submit"  class="btn btn-lg btn-danger" style="float: right">
+            <span class="glyphicon glyphicon-remove-circle"></span>  Delete</button>
+        </div>
+    </div>
+
+    <div class="row"><div class="col-md-2"><h1>ID</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead">$pubid</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Title</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead">Fatal Flaws in SQL - Part Two.</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Author</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">E. F. Codd</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Year</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">1989</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Journal</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">Phys. Rev. B 61, 13484 (2000)</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Volume</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">1</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>URL</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">db/journals/cmgt/cmgt1.html#Codd89a</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Category</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top"></p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Keywords</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top"></p></div></div>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
