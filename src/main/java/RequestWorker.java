@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class RequestWorker {
 
@@ -147,6 +148,7 @@ public class RequestWorker {
     public ModelAndView moreinfo(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
         model.put("pubid", req.params("pubid"));
+//        model.put("pubs", req.session().attribute("pubs"));
         model.put("template", "public/publication.vtl");
         model.put("styles", "public/styles/publication.vtl");
         return new ModelAndView(model, layout);

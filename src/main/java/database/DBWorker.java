@@ -35,14 +35,7 @@ public class DBWorker {
 
     public List search(HashMap<String, Object> map) throws SQLException {
         StringBuilder query = new StringBuilder();
-        query.append("select ");
-        Set<String> columns = map.keySet();
-        columns.forEach(c -> {
-            query.append(c + ", ");
-        });
-        query.delete(query.length() - 2, query.length() - 1);
-
-        query.append("from publication natural join person where ");
+        query.append("select pubid, title, name, year from publication natural join person where ");
 
         map.entrySet().forEach(set -> {
             String key = set.getKey();
@@ -58,17 +51,41 @@ public class DBWorker {
             query.append(" and ");
         });
         query.delete(query.length() - 5, query.length());
-        query.append(";");
+        query.append(" limit 500;");
 
+        System.out.println(query.toString());
+
+        List<HashMap> list = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery(query.toString());
-        ResultSetMetaData meta = resultSet.getMetaData();
-        int size = meta.getColumnCount();
-        List<HashMap> list = new ArrayList<>(size);
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int colCount = metaData.getColumnCount();
+        int j = 1;
+        Object prevID = null;
+        List authors = null;
 
-        for (int i = 0; i < size; i++) {
-            HashMap pub = new HashMap();
-            pub.put(meta.getColumnName(i), resultSet.getString(i));
-            list.add(pub);
+        while (resultSet.next() && j <= 20) {
+            HashMap columns = new HashMap();
+
+            if (!resultSet.getObject(1).equals(prevID)) {
+
+                for (int i = 1; i <= colCount; i++) {
+                    if (i == 3) {
+                        authors = new ArrayList<>();
+                        authors.add(resultSet.getObject(i));
+                        columns.put(metaData.getColumnLabel(i), authors);
+                    } else {
+                        columns.put(metaData.getColumnLabel(i), resultSet.getObject(i));
+                    }
+                }
+                list.add(columns);
+                j++;
+
+            } else {
+                authors.add(resultSet.getObject(3));
+                list.get(list.size()-1).put(metaData.getColumnLabel(3), authors);
+            }
+
+            prevID = resultSet.getObject(1);
         }
 
         return list;

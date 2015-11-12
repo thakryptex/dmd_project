@@ -70,95 +70,38 @@
 
         <div class="table-responsive" name="results">
 
-            <table class="table table-hover">
-                <thead>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Year</th>
-                    <th>Type</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Seven Steps to Rendezvous with the Casual User.</td>
-                        <td>E. F. Codd</td>
-                        <td>1974</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Interactive Support for Non-Programmers: The Relational and Network Approaches.</td>
-                        <td>E. F. Codd</td>
-                        <td>1974</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>The Capabilities of Relational Database Management Systems.</td>
-                        <td>E. F. Codd</td>
-                        <td>1981</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Relational Completeness of Data Base Sublanguages.</td>
-                        <td>E. F. Codd</td>
-                        <td>1972</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Further Normalization of the Data Base Relational Model.</td>
-                        <td>E. F. Codd</td>
-                        <td>1971</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Data Base Sublanguage Founded on the Relational Calculus.</td>
-                        <td>E. F. Codd</td>
-                        <td>1971</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Derivability, Redundancy and Consistency of Relations Stored in Large Data Banks.</td>
-                        <td>E. F. Codd</td>
-                        <td>1969</td>
-                        <td>Article</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Normalized Data Base Structure: A Brief Tutorial.</td>
-                        <td>E. F. Codd</td>
-                        <td>1971</td>
-                        <td>Article</td>
-                    </tr>
-                        <tr>
-                            <td>38048</td>
-                            <td>Fatal Flaws in SQL - Part Two.</td>
-                            <td>E. F. Codd</td>
-                            <td>1989</td>
-                            <td>Article</td>
-                            <td><a href="publication/38048" class="btn btn-info" role="button">Info</a></td>
-                        </tr>
+            #if( $pubs )
+                <table class="table table-hover">
+                    <thead>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Year</th>
+                        <th>Type</th>
+                    </thead>
+                    <tbody>
 
-                    #if( $pubs)
-                        #foreach( $pub in $pubs )
-                            <a href="publication/$pubid">
+                            #foreach( $pub in $pubs )
                                 <tr>
                                     <td>$pub.pubid</td>
                                     <td>$pub.title</td>
-                                    <td>$pub.name</td>
+                                    <td>#foreach( $n in $pub.name )
+                                            $n
+                                            #if( $velocityHasNext ), #end
+                                        #end
+                                        .
+                                    </td>
                                     <td>$pub.year</td>
                                     <td>$pub.type</td>
+                                    <td><a href="publication/$pub.pubid" class="btn btn-info" role="button">Info</a></td>
                                 </tr>
-                            </a>
-                        #end
-                    #end
-                </tbody>
-            </table>
+                            #end
+
+                    </tbody>
+                </table>
+            #else
+                <h1>Nothing found.</h1>
+            #end
 
         </div>
 
