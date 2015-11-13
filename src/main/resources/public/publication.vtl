@@ -60,31 +60,71 @@
     <div class="row"><div class="col-md-2"><h1>Title</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead">$pub.title</p></div></div>
 
+    #if ( $pub.booktitle )
+    <div class="row"><div class="col-md-2"><h1>Booktitle</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead">$pub.booktitle</p></div></div>
+    #end
+
+    #if ( $pub.name )
     <div class="row"><div class="col-md-2"><h1>Author</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top">
             #foreach( $n in $pub.name )
-                $n
-                #if( $velocityHasNext ),
-                #else. #end
+                $n#if( $velocityHasNext ), #else. #end
             #end
         </p></div></div>
+    #end
 
-    <div class="row"><div class="col-md-2"><h1>Year</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead pad-top">$pub.year</p></div></div>
+    <div class="row"><div class="col-md-2"><h1>Date</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">
+            #if ( $pub.month )$pub.month #end $pub.year
+        </p></div></div>
 
+    #if ( $pub.journal )
     <div class="row"><div class="col-md-2"><h1>Journal</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top">$pub.journal</p></div></div>
+    #end
 
+    #if ( $pub.volume )
     <div class="row"><div class="col-md-2"><h1>Volume</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top">$pub.volume</p></div></div>
+    #end
 
+    #if ( $pub.pages )
+    <div class="row"><div class="col-md-2"><h1>Pages</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">$pub.pages</p></div></div>
+    #end
+
+    #if ( $pub.series )
+    <div class="row"><div class="col-md-2"><h1>Series</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">$pub.series</p></div></div>
+    #end
+
+    #if ( $pub.publisher )
+    <div class="row"><div class="col-md-2"><h1>Publisher</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">$pub.publisher</p></div></div>
+    #end
+
+    #if ( $pub.isbn )
+    <div class="row"><div class="col-md-2"><h1>ISBN</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">$pub.isbn</p></div></div>
+    #end
+
+    #if ( $pub.doi )
+    <div class="row"><div class="col-md-2"><h1>DOI</h1></div><div class="col-md-9 col-md-offset-1">
+        <p class="lead pad-top">$pub.doi</p></div></div>
+    #end
+
+    #if ( $pub.url )
     <div class="row"><div class="col-md-2"><h1>URL</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top">$pub.url</p></div></div>
+    #end
 
     <div class="row"><div class="col-md-2"><h1>Category</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top"></p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Keywords</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top"></p></div></div>
+
 </div>
 
 

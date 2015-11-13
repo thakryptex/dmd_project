@@ -109,7 +109,7 @@ public class DBWorker {
         getType.close();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("select p.pubid, title, name, year, type, ");
+        sb.append("select p.pubid, title, name, year, type, doi ");
 
         switch (type) {
             case "article":
