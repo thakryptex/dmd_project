@@ -87,9 +87,9 @@
                                     <td>$pub.title</td>
                                     <td>#foreach( $n in $pub.name )
                                             $n
-                                            #if( $velocityHasNext ), #end
+                                            #if( $velocityHasNext ),
+                                            #else. #end
                                         #end
-                                        .
                                     </td>
                                     <td>$pub.year</td>
                                     <td>$pub.type</td>
@@ -100,7 +100,7 @@
                     </tbody>
                 </table>
             #else
-                <h1>Nothing found.</h1>
+                <h1 name="notfound">Nothing found.</h1>
             #end
 
         </div>

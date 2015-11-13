@@ -35,7 +35,7 @@ public class DBWorker {
 
     public List search(HashMap<String, Object> map) throws SQLException {
         StringBuilder query = new StringBuilder();
-        query.append("select pubid, title, name, year from publication natural join person where ");
+        query.append("select pubid, title, name, year, type from publication natural join person where ");
 
         map.entrySet().forEach(set -> {
             String key = set.getKey();
@@ -79,7 +79,6 @@ public class DBWorker {
                 }
                 list.add(columns);
                 j++;
-
             } else {
                 authors.add(resultSet.getObject(3));
                 list.get(list.size()-1).put(metaData.getColumnLabel(3), authors);

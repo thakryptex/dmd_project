@@ -18,3 +18,8 @@ body {
 .pub li {
   border: 1px solid lightblue;
 }
+
+.notfound {
+  text-align: center;
+  color: #ff6352;
+}
