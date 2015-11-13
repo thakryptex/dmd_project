@@ -69,11 +69,10 @@ public class DBWorker {
         ResultSet resultSet = statement.executeQuery(query.toString());
         ResultSetMetaData metaData = resultSet.getMetaData();
         int colCount = metaData.getColumnCount();
-        int j = 1;
         Object prevID = null;
         List authors = null;
 
-        while (resultSet.next() && j <= 20) {
+        while (resultSet.next()) {
             HashMap columns = new HashMap();
 
             if (!resultSet.getObject(1).equals(prevID)) {
@@ -88,12 +87,10 @@ public class DBWorker {
                     }
                 }
                 list.add(columns);
-                j++;
             } else {
                 authors.add(resultSet.getObject(3));
                 list.get(list.size()-1).put(metaData.getColumnLabel(3), authors);
             }
-
             prevID = resultSet.getObject(1);
         }
 

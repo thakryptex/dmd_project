@@ -40,73 +40,99 @@
     </div>
 </nav>
 
+<div class="container">
+    <form class="form-signin" action="searching" method="post">
+        <h2 class="form-signin-heading">Fill attributes to find publication you need.</h2>
 
-    <div class="container">
+        <label for="title" class="sr-only">Title</label>
+        <input id="title" name="title" type="text" class="form-control" placeholder="Title">
 
-        <form class="form-signin" action="searching" method="post">
-            <h2 class="form-signin-heading">Fill attributes to find publication you need.</h2>
+        <label for="name" class="sr-only">Author</label>
+        <input id="name" name="name" type="text" class="form-control" placeholder="Author">
 
-            <label for="title" class="sr-only">Title</label>
-            <input id="title" name="title" type="text" class="form-control" placeholder="Title">
+        <label for="year" class="sr-only">Year</label>
+        <input id="year" name="year" type="number" class="form-control" placeholder="Year">
 
-            <label for="name" class="sr-only">Author</label>
-            <input id="name" name="name" type="text" class="form-control" placeholder="Author">
+        <label for="pubid" class="sr-only">Publication ID</label>
+        <input id="pubid" name="pubid" type="number" class="form-control" placeholder="ID">
 
-            <label for="year" class="sr-only">Year</label>
-            <input id="year" name="year" type="number" class="form-control" placeholder="Year">
+        <label for="type" class="sr-only">Publication type</label>
+        <input id="type" name="type" type="text" class="form-control" placeholder="Type">
 
-            <label for="pubid" class="sr-only">Publication ID</label>
-            <input id="pubid" name="pubid" type="number" class="form-control" placeholder="ID">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+    </form>
 
-            <label for="type" class="sr-only">Publication type</label>
-            <input id="type" name="type" type="text" class="form-control" placeholder="Type">
+<div id="wrapper">
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
-        </form>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Found publications
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            #if( $pubs )
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Year</th>
+                                        <th>Type</th>
+                                        <th>Link</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-        <p></p>
-        <p></p>
-        <p></p>
-
-        <div class="table-responsive" name="results">
-
-            #if( $pubs )
-                <table class="table table-hover">
-                    <thead>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Year</th>
-                        <th>Type</th>
-                    </thead>
-                    <tbody>
-
-                            #foreach( $pub in $pubs )
-                                <tr>
-                                    <td>$pub.pubid</td>
-                                    <td>$pub.title</td>
-                                    <td>#foreach( $n in $pub.name )
-                                            $n
-                                            #if( $velocityHasNext ),
-                                            #else. #end
+                                        #foreach( $pub in $pubs )
+                                        <tr class="gradeA">
+                                            <td>$pub.pubid</td>
+                                            <td>$pub.title</td>
+                                            <td>#foreach( $n in $pub.name )
+                                                $n#if( $velocityHasNext ), #else. #end
+                                            #end
+                                            </td>
+                                            <td>$pub.year</td>
+                                            <td>$pub.type</td>
+                                            <td><a href="publication/$pub.pubid" class="btn btn-info" role="button">Info</a></td>
+                                        </tr>
                                         #end
-                                    </td>
-                                    <td>$pub.year</td>
-                                    <td>$pub.type</td>
-                                    <td><a href="publication/$pub.pubid" class="btn btn-info" role="button">Info</a></td>
-                                </tr>
+
+                                    </tbody>
+                                </table>
+                            #else
+                                <h1 class="notfound">Nothing found.</h1>
                             #end
-
-                    </tbody>
-                </table>
-            #else
-                <h1 name="notfound">Nothing found.</h1>
-            #end
-
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
         </div>
 
-    </div>
+        <!-- /#page-wrapper -->
 
+    </div>
+    <!-- /#wrapper -->
+</div>
 
     <script src="js/jquery.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
