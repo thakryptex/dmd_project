@@ -55,19 +55,32 @@
     </div>
 
     <div class="row"><div class="col-md-2"><h1>ID</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead">$pubid</p></div></div>
+        <p class="lead">$pub.pubid</p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Title</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead">$pubs</p></div></div>
+        <p class="lead">$pub.title</p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Author</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead pad-top">E. F. Codd</p></div></div>
+        <p class="lead pad-top">
+            #foreach( $n in $pub.name )
+                $n
+                #if( $velocityHasNext ),
+                #else. #end
+            #end
+        </p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Year</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead pad-top">1989</p></div></div>
+        <p class="lead pad-top">$pub.year</p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Journal</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead pad-top">Phys. Rev. B 61, 13484 (2000)</p></div></div>
+        <p class="lead pad-top">$pub.journal</p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Volume</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead pad-top">1</p></div></div>
+        <p class="lead pad-top">$pub.volume</p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>URL</h1></div><div class="col-md-9 col-md-offset-1">
-        <p class="lead pad-top">db/journals/cmgt/cmgt1.html#Codd89a</p></div></div>
+        <p class="lead pad-top">$pub.url</p></div></div>
+
     <div class="row"><div class="col-md-2"><h1>Category</h1></div><div class="col-md-9 col-md-offset-1">
         <p class="lead pad-top"></p></div></div>
     <div class="row"><div class="col-md-2"><h1>Keywords</h1></div><div class="col-md-9 col-md-offset-1">
