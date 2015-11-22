@@ -28,8 +28,8 @@ public class MappedDB {
     }
 
     public void copyTablesAndDataFrom(DBWorker psql) throws SQLException {
-//        copyTablesInfo(psql);
-//        copyData(psql);
+        copyTablesInfo(psql);
+        copyData(psql);
         createIndexes();
     }
 
@@ -80,36 +80,58 @@ public class MappedDB {
                 table.put(row, map);
                 System.out.println(row);
                 if (row % 100000 == 0) {
-                    db.commit();    System.gc();
+                    db.commit();
                 }
+
+                //TODO delete this
+                if (row == 100000) break;
+                //TODO delete this
+
             }
             System.out.println("Table " + name + " copied.");
             db.commit();
-            resultSet.close();  System.gc();
+            resultSet.close();
             try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace(); }
         }
     }
 
-    private void createIndexes() {
+    public void createIndexes() {
         HashMap<String, List<String>> tables = new HashMap<>();
         tables.put("publication", new ArrayList<String>(Arrays.asList("title", "year", "pubid", "type")));
         tables.put("written", new ArrayList<String>(Arrays.asList("name")));
 
+        System.out.println(tables.toString());
+
         // cycle for tables that need to be indexed
         for (Map.Entry<String, List<String>> table: tables.entrySet()) {
-            ConcurrentNavigableMap<Integer, HashMap> rowMap = db.treeMap(table.getKey());
+            String key = table.getKey();
+            ConcurrentNavigableMap<Integer, HashMap> rowMap = db.treeMap(key);
+            System.out.println("Indexing table: " + key);
 
             // cycle for all rows of the table
             for (Map.Entry<Integer, HashMap> row: rowMap.entrySet()) {
+                Integer rowKey = row.getKey();
 
                 // cycle for searched columns of table
                 for (String s: table.getValue()) {
-                    ConcurrentNavigableMap<Object, Integer> index = db.treeMap("index_" + table.getKey() + "_" + s);
-                    index.put(row.getValue().get(s), row.getKey());
+                    ConcurrentNavigableMap<Object, Integer> index = db.treeMap("index_" + key + "_" + s);
+                    try {
+                        Object obj = row.getValue().get(s);
+                    } catch (NullPointerException e) {
+                        continue;
+                    }
+                    index.put(row.getValue().get(s), rowKey);
+                }
+
+                System.out.println("Indexing row: " + rowKey);
+
+                if (rowKey % 100000 == 0) {
+                    db.commit();
                 }
             }
             db.commit();
         }
+        System.out.println("Indexing is over.");
     }
 
     public DB db() {
