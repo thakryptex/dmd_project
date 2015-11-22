@@ -1,4 +1,4 @@
-package database.XMLparser;
+package database_pgsql.XMLparser;
 
 import java.sql.*;
 

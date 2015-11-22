@@ -1,6 +1,6 @@
-package database.XMLparser;
+package database_pgsql.XMLparser;
 
-import database.DBWorker;
+import database_pgsql.DBWorker;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -68,7 +68,7 @@ public class XMLparser {
         long finish = System.currentTimeMillis();
         System.out.println("\nTime: " + TimeUnit.MILLISECONDS.toSeconds(finish-start));
 
-        dbWorker.disconnectToDB();
+        dbWorker.disconnectFromDB();
     }
 
     private static void switcher(String endElement) throws SQLException {

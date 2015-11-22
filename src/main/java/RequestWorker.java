@@ -1,5 +1,5 @@
-import database.DBWorker;
-import database.UsersTable;
+import database_pgsql.DBWorker;
+import database_pgsql.UsersTable;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class RequestWorker {
 

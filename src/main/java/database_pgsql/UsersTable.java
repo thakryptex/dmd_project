@@ -1,4 +1,4 @@
-package database;
+package database_pgsql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

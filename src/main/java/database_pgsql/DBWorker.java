@@ -1,4 +1,4 @@
-package database;
+package database_pgsql;
 
 import java.sql.*;
 import java.util.*;
@@ -17,7 +17,7 @@ public class DBWorker {
         statement = connection.createStatement();
     }
 
-    public void disconnectToDB() throws SQLException {
+    public void disconnectFromDB() throws SQLException {
         statement.close();
         connection.close();
     }
