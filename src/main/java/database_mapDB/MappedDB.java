@@ -169,6 +169,27 @@ public class MappedDB {
         return join;
     }
 
+    public void delete(int pubid) throws SQLException {
+        System.out.println("Entering into deletion method...");
+        ConcurrentNavigableMap<Integer, HashMap<String, Object>> pblctn = db.treeMap("publication");
+        ConcurrentNavigableMap<Object, List<Integer>> index1 = db.treeMap("index_publication_pubid");
+        int key1 = index1.get(pubid).get(0);
+        String type = null;
+        for (Map.Entry entry: pblctn.get(key1).entrySet()) {
+            if (entry.getKey().equals("type"))
+                type = String.valueOf(entry.getValue());
+        }
+        if (type != null) {
+            ConcurrentNavigableMap<Integer, HashMap<String, Object>> table = db.treeMap(type);
+            ConcurrentNavigableMap<Object, List<Integer>> index2 = db.treeMap("index_" + type + "_pubid");
+            int key2 = index2.get(pubid).get(0);
+            pblctn.remove(key1);
+            table.remove(key2);
+        }
+
+        System.out.println("End of deletion method.");
+    }
+
     private List<HashMap> naturaljoin(ConcurrentNavigableMap<Integer, HashMap<String, Object>> t1, ConcurrentNavigableMap<Integer, HashMap<String, Object>> t2, HashMap<String, Object> where) {
         System.out.println("Entering into natural join method...");
         List<HashMap> join = new ArrayList<>();

@@ -1,3 +1,4 @@
+import database_mapDB.MappedDB;
 import database_pgsql.DBWorker;
 import database_pgsql.UsersTable;
 import spark.ModelAndView;
@@ -12,7 +13,8 @@ import java.util.NoSuchElementException;
 
 public class RequestWorker {
 
-    public DBWorker dbWorker = new DBWorker();
+//    public DBWorker dbWorker = new DBWorker();
+    public MappedDB dbWorker = new MappedDB();
     public HashMap<String, String> emptyMap = new HashMap<>();
     public String layout = "public/layout.vtl";
 
@@ -47,7 +49,7 @@ public class RequestWorker {
         String password = args[1].split("=")[1];
 
         try {
-            UsersTable.findUser(login, password, dbWorker.statement());
+            database_mapDB.UsersTable.findUser(login, password, dbWorker);
         } catch (NoSuchElementException e) {
             System.out.println(req.body());
             req.session().attribute("error", "Wrong login or password. Try again...");
@@ -81,8 +83,9 @@ public class RequestWorker {
         String password = args[1].split("=")[1];
 
         try {
-            UsersTable.addUser(login, password, dbWorker.statement());
-        } catch (SQLException e) {
+//            UsersTable.addUser(login, password, dbWorker.statement());
+            database_mapDB.UsersTable.addUser(login, password, dbWorker);
+        } catch (Exception e) {
             req.session().attribute("error", "User with this login already exist.");
             res.redirect("/register");
         }
