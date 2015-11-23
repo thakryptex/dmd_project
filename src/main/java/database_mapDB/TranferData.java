@@ -14,8 +14,8 @@ public class TranferData {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-        psql = new DBWorker();
-        psql.connectToDB();
+//        psql = new DBWorker();
+//        psql.connectToDB();
 
         mapDB = new MappedDB();
         mapDB.connectToDB("publib.db");
@@ -23,7 +23,8 @@ public class TranferData {
         try {
 
 //            mapDB.copyTablesAndDataFrom(psql);
-            printTest("publication", "users", "written", "article", "book", "publisher", "index_publication_title", "index_written_name");
+//            printTest("publication", "users", "written", "article", "book", "publisher", "index_publication_title", "index_written_name");
+            testSearch();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,6 +49,13 @@ public class TranferData {
             }
             System.out.println(sb.toString());
         }
+    }
+
+    private static void testSearch() throws SQLException {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("title", "data");
+        List list = mapDB.search(map);
+        list.forEach(row -> System.out.println(row.toString()));
     }
 
 
