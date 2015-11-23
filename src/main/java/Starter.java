@@ -19,7 +19,8 @@ public class Starter {
         staticFileLocation("/public");
 
         RequestWorker request = new RequestWorker();
-        request.dbWorker.connectToDB();
+        request.dbsql.connectToDB();
+        request.dbWorker.connectToDB("publib.db");
 
         get("/", (req, res) -> {
             res.redirect("/index");

@@ -148,6 +148,7 @@ public class MappedDB {
         ConcurrentNavigableMap<Integer, HashMap<String, Object>> pblctn = db.treeMap("publication");
         ConcurrentNavigableMap<Integer, HashMap<String, Object>> wrttn = db.treeMap("written");
         List<HashMap> join = naturaljoin(pblctn, wrttn, where);
+        join.forEach(row -> System.out.println(row.toString()));
         System.out.println("End of search method.");
         return join;
     }
@@ -216,14 +217,9 @@ public class MappedDB {
                 values.put("name", names);
 
                 if (satisfies(where, values))
-                    map.put(entry.getValue().get(0), values);
-                else
-                    map = null;
+                    join.add(values);
             }
 
-            if (map != null) {
-                join.add(map);
-            }
             System.out.println(i++);
         }
 
@@ -256,19 +252,21 @@ public class MappedDB {
 
     private boolean satisfies(HashMap<String, Object> where, HashMap<String, Object> values) {
         for (String col: where.keySet()) {
-            if (col.equals("pubid") || col.equals("year")) {
-                if (!values.get(col).equals(where.get(col)))
-                    return false;
-            } else if (col.equals("name")) {
-                List<String> list = (List) values.get(col);
-                for (String s: list) {
-                    if (!s.toLowerCase().contains(String.valueOf(where.get(col)).toLowerCase()))
+            if (where.get(col) != null || where.get(col).equals("")) {
+                if (col.equals("pubid") || col.equals("year")) {
+                    if (!values.get(col).equals(where.get(col)))
+                        return false;
+                } else if (col.equals("name")) {
+                    List<String> list = (List) values.get(col);
+                    for (String s : list) {
+                        if (!s.toLowerCase().contains(String.valueOf(where.get(col)).toLowerCase()))
+                            return false;
+                    }
+                } else {
+                    String val = String.valueOf(values.get(col)).toLowerCase();
+                    if (!val.contains(String.valueOf(where.get(col)).toLowerCase()))
                         return false;
                 }
-            } else {
-                String val = String.valueOf(values.get(col)).toLowerCase();
-                if (!val.contains(String.valueOf(where.get(col)).toLowerCase()))
-                    return false;
             }
         }
         return true;

@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 
 public class RequestWorker {
 
-//    public DBWorker dbWorker = new DBWorker();
+    public DBWorker dbsql = new DBWorker();
     public MappedDB dbWorker = new MappedDB();
     public HashMap<String, String> emptyMap = new HashMap<>();
     public String layout = "public/layout.vtl";
@@ -49,7 +49,8 @@ public class RequestWorker {
         String password = args[1].split("=")[1];
 
         try {
-            database_mapDB.UsersTable.findUser(login, password, dbWorker);
+            UsersTable.findUser(login, password, dbsql.statement());
+//            database_mapDB.UsersTable.findUser(login, password, dbWorker);
         } catch (NoSuchElementException e) {
             System.out.println(req.body());
             req.session().attribute("error", "Wrong login or password. Try again...");
@@ -83,8 +84,8 @@ public class RequestWorker {
         String password = args[1].split("=")[1];
 
         try {
-//            UsersTable.addUser(login, password, dbWorker.statement());
-            database_mapDB.UsersTable.addUser(login, password, dbWorker);
+            UsersTable.addUser(login, password, dbsql.statement());
+//            database_mapDB.UsersTable.addUser(login, password, dbWorker);
         } catch (Exception e) {
             req.session().attribute("error", "User with this login already exist.");
             res.redirect("/register");
@@ -152,7 +153,8 @@ public class RequestWorker {
 
         HashMap results = null;
         try {
-            results = dbWorker.getPubInfo(Integer.parseInt(req.params("pubid")));
+            results = dbsql.getPubInfo(Integer.parseInt(req.params("pubid")));
+//            results = dbWorker.getPubInfo(Integer.parseInt(req.params("pubid")));
         } catch (Exception e) {
             e.printStackTrace();
         }

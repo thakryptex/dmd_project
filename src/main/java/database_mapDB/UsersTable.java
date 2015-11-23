@@ -11,7 +11,7 @@ public class UsersTable {
         ConcurrentNavigableMap<Integer, HashMap<String, Object>> table = db.db().treeMap("users");
         boolean found = false;
         for (HashMap<String, Object> map: table.values()) {
-            if (map.containsKey(login) && map.containsValue(password))
+            if (map.containsKey(login) )
                 found = true;
         }
         if (!found)

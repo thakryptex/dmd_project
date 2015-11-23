@@ -25,12 +25,17 @@ public class TranferData {
 //            mapDB.copyTablesAndDataFrom(psql);
 //            printTest("publication", "users", "written", "article", "book", "publisher", "index_publication_title", "index_written_name");
             testSearch();
+//            testUserTable(mapDB);
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             mapDB.disconnectFromDB();
         }
+    }
+
+    private static void testUserTable(MappedDB mapDB) throws SQLException {
+        UsersTable.findUser("admin", "admin", mapDB);
     }
 
     public static void printTest(String... names) {
