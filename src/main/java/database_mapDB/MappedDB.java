@@ -183,11 +183,15 @@ public class MappedDB {
         if (type != null) {
             ConcurrentNavigableMap<Integer, HashMap<String, Object>> table = db.treeMap(type);
             ConcurrentNavigableMap<Object, List<Integer>> index2 = db.treeMap("index_" + type + "_pubid");
-            int key2 = index2.get(pubid).get(0);
             pblctn.remove(key1);
-            table.remove(key2);
+            int key2;
+            List<Integer> list = index2.get(pubid);
+            if (list != null) {
+                key2 = list.get(0);
+                table.remove(key2);
+            }
         }
-
+        db.commit();
         System.out.println("End of deletion method.");
     }
 
@@ -210,7 +214,7 @@ public class MappedDB {
                 HashMap<String, Object> values = t1.get(entry.getValue().get(0));
 
                 List list = index2.get(entry.getKey());
-                List names = new ArrayList<>();
+                List names = new ArrayList();
                 for (Object p: list) {
                     names.add(t2.get(p).get("name"));
                 }

@@ -24,8 +24,11 @@ public class TranferData {
 
 //            mapDB.copyTablesAndDataFrom(psql);
 //            printTest("publication", "users", "written", "article", "book", "publisher", "index_publication_title", "index_written_name");
-            testSearch();
 //            testUserTable(mapDB);
+
+//            System.out.println(mapDB.db().treeMap("tables_info").toString());
+            testSearch();
+//            testDelete(50895);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +63,11 @@ public class TranferData {
         HashMap<String, Object> map = new HashMap<>();
         map.put("title", "data");
         List list = mapDB.search(map);
-        list.forEach(row -> System.out.println(row.toString()));
+    }
+
+    private static void testDelete(int i) throws SQLException {
+        mapDB.delete(i);
+        testSearch();
     }
 
 
